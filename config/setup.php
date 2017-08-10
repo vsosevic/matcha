@@ -109,11 +109,11 @@ try {
 		CREATE TABLE `Avatars`
 			(Id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 			users_id INT(6) UNSIGNED NOT NULL,
-			avatar1 VARCHAR(200) DEFAULT 'uploads/no_image.png',
-			avatar2 VARCHAR(200) DEFAULT 'uploads/no_image.png',
-			avatar3 VARCHAR(200) DEFAULT 'uploads/no_image.png',
-			avatar4 VARCHAR(200) DEFAULT 'uploads/no_image.png',
-			avatar5 VARCHAR(200) DEFAULT 'uploads/no_image.png',
+			avatar1 VARCHAR(200) DEFAULT 'sources/no_image.png',
+			avatar2 VARCHAR(200) DEFAULT 'sources/no_image.png',
+			avatar3 VARCHAR(200) DEFAULT 'sources/no_image.png',
+			avatar4 VARCHAR(200) DEFAULT 'sources/no_image.png',
+			avatar5 VARCHAR(200) DEFAULT 'sources/no_image.png',
 			FOREIGN KEY (users_id) REFERENCES Users (Id)
 				ON DELETE CASCADE
        			ON UPDATE CASCADE

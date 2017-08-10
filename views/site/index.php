@@ -1,53 +1,59 @@
 <?php
+use app\models\Cities;
 
 /* @var $this yii\web\View */
 
 $this->title = 'Matcha';
 ?>
+
+
 <div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
+    <div class="row is-table-row">
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="#">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
+        <div class="col-sm-2">
+            <a href="#" class="text-center" ><img src="<?php echo Yii::$app->request->baseUrl . '/' . 'sources/like.png' ?>" class="img img-responsive"></a>            
+            <a href="#" class="text-center" style="display: none;"><img src="<?php echo Yii::$app->request->baseUrl . '/' . 'sources/liked.png' ?>" class="img img-responsive"></a>      
         </div>
 
-    </div>
+        <div class="col-sm-4 bg-success text-center">
+            <img src="<?php echo Yii::$app->request->baseUrl . '/' . $avatars->avatar1 ?>" class="img-circle img-responsive center-block">
+            <br>
+            Fame-rating: <code> <?php echo $model->fame_rating; ?> </code>
+        </div>
+        
+        <div class="col-sm-4 bg-info">
+            <h3><?php echo $model->first_name. " " .$model->last_name; ?>
+                <small> <?php echo $model->user_name ?> </small>
+            </h3>
+            <br>
+            <hr>
+            <p>
+                <span class="text-muted">Email: </span>
+                <span><?php echo $model->email ?></span>
+            </p>
+            <p>
+                <span class="text-muted">Gender: </span>
+                <span><?php echo $model->genderList[$model->gender] ?></span>
+            </p>
+            <p>
+                <span class="text-muted">Orientation: </span>
+                <span><?php echo $model->orientationList[$model->orientation] ?></span>
+            </p>
+            <p>
+                <span class="text-muted">Interests: </span>
+                <span><?php echo $interests ?></span>
+            </p>
+            <p>
+                <span class="text-muted">City: </span>
+                <span><?php echo Cities::getCityToStringById($model->city_id) ?></span>
+            </p>
+            <p>
+                <span class="text-muted">About: </span>
+                <span><?php echo $model->about ?></span>
+            </p>
+        </div>
+        
+    </div>        
+
 </div>

@@ -35,3 +35,4 @@ config/db.php
 
 #user's photos
 web/uploads
+

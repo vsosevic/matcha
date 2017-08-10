@@ -9,6 +9,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <h1><?= Html::encode($this->title) ?></h1>
+
+<!-- Section with 1 avatar and user info -->
 <div class="row is-table-row">
 	<div class="col-sm-4 bg-success text-center">
 		<a href="upload-avatar?avatarId=avatar1"><img src="<?php echo Yii::$app->request->baseUrl . '/' . $avatars->avatar1 ?>" class="img-circle img-responsive center-block"></a>
@@ -49,6 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	</div>
 </div>
 
+<!-- Section with 4 more avatars -->
 <div class="row bg-success" style="padding: 20px;">
 	<div class="col-sm-3">
 		<a href="upload-avatar?avatarId=avatar2"><img src="<?php echo Yii::$app->request->baseUrl . '/' . $avatars->avatar2 ?>" class="img-responsive"></a>
@@ -69,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 	// echo ($_SERVER['SERVER_ADDR']);
   // print_r(yii::$app->geolocation->getInfo('173.194.118.22'));
-print_r(yii::$app->geoplugin->locateCity()['geoplugin_countryName']);
+print_r(yii::$app->geoplugin->locateCity()['geoplugin_city']);
 
 ?>
 

@@ -49,8 +49,6 @@ class UsersController extends \yii\web\Controller
         // print_r(yii::$app->geolocation->getInfo('173.194.118.22')); die();
         $model = Users::findByUsername(Yii::$app->user->identity->user_name);
         $avatars = Avatars::getAvatarsByUserId(Yii::$app->user->identity->Id);
-        // $city = Cities::getCityToStringById($model->city_id);
-        // var_dump($avatars->avatar1); die();
         $usersToInterests = new Userstointerests;
         $interests = $usersToInterests->getInterestsToStringByUserId(Yii::$app->user->identity->Id);
         return $this->render('settings', ['model' => $model, 'interests' => $interests, 'avatars' => $avatars]);
@@ -64,7 +62,7 @@ class UsersController extends \yii\web\Controller
         {
             die();
         }
-        $userCity = yii::$app->geoplugin->locateCity()['geoplugin_countryName'];
+        $userCity = yii::$app->geoplugin->locateCity()['geoplugin_city'];
         $cityInDB = Cities::getCityByName($userCity);
         if (!$cityInDB) {
             $cityInDB = new Cities;
@@ -73,7 +71,7 @@ class UsersController extends \yii\web\Controller
         }
         $model->city_id = $cityInDB->Id;
         $model->save();
-        echo $userCity;
+        // echo $userCity;
     }
 
     public function actionEditsettings()
@@ -82,6 +80,7 @@ class UsersController extends \yii\web\Controller
             return $this->goHome();
         }
         $model = Users::findByUsername(Yii::$app->user->identity->user_name);
+        // $this->actionSaveCity();
         if (is_null($userCity = Cities::getCityToStringById($model->city_id)))
         {
             $userCity = "Worldwide";
@@ -111,7 +110,7 @@ class UsersController extends \yii\web\Controller
                 $model->link('interests', $interests);
             }
             
-            if (!is_null($userCity = $_POST['userCity']))
+            if (!empty($userCity = $_POST['userCity']))
             {
                 $city = Cities::getCityByName($userCity);
                 if (is_null($city))

@@ -8,6 +8,10 @@ use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\ContactForm;
+use app\models\Users;
+use app\models\Avatars;
+use app\models\Userstointerests;
+use app\models\Cities;
 
 class SiteController extends Controller
 {
@@ -60,7 +64,12 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $model = Users::findByUsername(Yii::$app->user->identity->user_name);
+        $avatars = Avatars::getAvatarsByUserId(Yii::$app->user->identity->Id);
+        $usersToInterests = new Userstointerests;
+        $interests = $usersToInterests->getInterestsToStringByUserId(Yii::$app->user->identity->Id);
+
+        return $this->render('index', ['model' => $model, 'interests' => $interests, 'avatars' => $avatars]);
     }
 
     
