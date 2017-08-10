@@ -28,3 +28,10 @@ phpunit.phar
 
 tests/_output/*
 tests/_support/_generated
+
+#DB settings
+config/database.php
+config/db.php
+
+#user's photos
+web/uploads

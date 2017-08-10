@@ -13,7 +13,7 @@ use app\models\Cities;
 use app\models\Avatars;
 use yii\web\UploadedFile;
 
-class UserController extends \yii\web\Controller
+class UsersController extends \yii\web\Controller
 {
     /**
      * Login action.
@@ -124,7 +124,7 @@ class UserController extends \yii\web\Controller
                 // $model->city_id = $city->Id;
             }
             $model->save();
-            return $this->redirect(['user/settings']);
+            return $this->redirect(['users/settings']);
         }
         // $usersToInterests = new Userstointerests;
         $interests = Userstointerests::getInterestsToStringByUserId(Yii::$app->user->identity->Id);
@@ -158,7 +158,7 @@ class UserController extends \yii\web\Controller
                 }
                 $new_image->saveAs('uploads/'.$new_image_name);
             }
-            return $this->redirect(['user/settings']);
+            return $this->redirect(['users/settings']);
         }
         return $this->render('upload-avatar', ['avatars' => $avatars]);
     }

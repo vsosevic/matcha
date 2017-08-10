@@ -40,10 +40,10 @@ AppAsset::register($this);
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
-            ['label' => 'SignUp', 'url' => ['/user/signup'], 'visible' => Yii::$app->user->isGuest],
-            ['label' => 'Settings', 'url' => ['/user/settings'], 'visible' => !Yii::$app->user->isGuest],
+            ['label' => 'SignUp', 'url' => ['/users/signup'], 'visible' => Yii::$app->user->isGuest],
+            ['label' => 'Settings', 'url' => ['/users/settings'], 'visible' => !Yii::$app->user->isGuest],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/user/login']]
+                ['label' => 'Login', 'url' => ['/users/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
