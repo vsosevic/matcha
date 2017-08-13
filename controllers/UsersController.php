@@ -49,8 +49,7 @@ class UsersController extends \yii\web\Controller
         // print_r(yii::$app->geolocation->getInfo('173.194.118.22')); die();
         $model = Users::findByUsername(Yii::$app->user->identity->user_name);
         $avatars = Avatars::getAvatarsByUserId(Yii::$app->user->identity->Id);
-        $usersToInterests = new Userstointerests;
-        $interests = $usersToInterests->getInterestsToStringByUserId(Yii::$app->user->identity->Id);
+        $interests = Userstointerests::getInterestsToStringByUserId(Yii::$app->user->identity->Id);
         return $this->render('settings', ['model' => $model, 'interests' => $interests, 'avatars' => $avatars]);
     }
 

@@ -1,59 +1,33 @@
 <?php
-use app\models\Cities;
+use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 
-$this->title = 'Matcha';
+// $this->title = 'Matcha';
 ?>
 
+<?= ListView::widget([
+    'dataProvider' => $dataProvider,
 
-<div class="site-index">
+    'itemView' => '_userlist',
+    'itemOptions' => [
+        'tag' => 'div',
+        'class' => 'user-card',
+    ],
 
-    <div class="row is-table-row">
+    'emptyText' => 'No matches yet :(',
+    'emptyTextOptions' => [
+        'tag' => 'p'
+    ],
 
-        <div class="col-sm-2">
-            <a href="#" class="text-center" ><img src="<?php echo Yii::$app->request->baseUrl . '/' . 'sources/like.png' ?>" class="img img-responsive"></a>            
-            <a href="#" class="text-center" style="display: none;"><img src="<?php echo Yii::$app->request->baseUrl . '/' . 'sources/liked.png' ?>" class="img img-responsive"></a>      
-        </div>
+    'summary' => '{count} shown of {totalCount} total',
+    'summaryOptions' => [
+        'tag' => 'span',
+        'class' => 'list-summary'
+    ],
 
-        <div class="col-sm-4 bg-success text-center">
-            <img src="<?php echo Yii::$app->request->baseUrl . '/' . $avatars->avatar1 ?>" class="img-circle img-responsive center-block">
-            <br>
-            Fame-rating: <code> <?php echo $model->fame_rating; ?> </code>
-        </div>
-        
-        <div class="col-sm-4 bg-info">
-            <h3><?php echo $model->first_name. " " .$model->last_name; ?>
-                <small> <?php echo $model->user_name ?> </small>
-            </h3>
-            <br>
-            <hr>
-            <p>
-                <span class="text-muted">Email: </span>
-                <span><?php echo $model->email ?></span>
-            </p>
-            <p>
-                <span class="text-muted">Gender: </span>
-                <span><?php echo $model->genderList[$model->gender] ?></span>
-            </p>
-            <p>
-                <span class="text-muted">Orientation: </span>
-                <span><?php echo $model->orientationList[$model->orientation] ?></span>
-            </p>
-            <p>
-                <span class="text-muted">Interests: </span>
-                <span><?php echo $interests ?></span>
-            </p>
-            <p>
-                <span class="text-muted">City: </span>
-                <span><?php echo Cities::getCityToStringById($model->city_id) ?></span>
-            </p>
-            <p>
-                <span class="text-muted">About: </span>
-                <span><?php echo $model->about ?></span>
-            </p>
-        </div>
-        
-    </div>        
 
-</div>
+]); ?>
+
+
+

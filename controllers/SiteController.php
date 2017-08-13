@@ -12,6 +12,7 @@ use app\models\Users;
 use app\models\Avatars;
 use app\models\Userstointerests;
 use app\models\Cities;
+use yii\data\ActiveDataProvider;
 
 class SiteController extends Controller
 {
@@ -64,12 +65,26 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $model = Users::findByUsername(Yii::$app->user->identity->user_name);
-        $avatars = Avatars::getAvatarsByUserId(Yii::$app->user->identity->Id);
-        $usersToInterests = new Userstointerests;
-        $interests = $usersToInterests->getInterestsToStringByUserId(Yii::$app->user->identity->Id);
+        $query = Users::find()->joinWith('city', true)->where(['city_id' => 1]);
+        // echo "<pre>";
+        // var_dump($query); die();
 
-        return $this->render('index', ['model' => $model, 'interests' => $interests, 'avatars' => $avatars]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'Id' => SORT_DESC,
+                    'age' => SORT_ASC, 
+                ]
+            ],
+        ]);
+
+        $this->view->title = 'Your best metches';
+        return $this->render('index', ['dataProvider' => $dataProvider]);
+        
     }
 
     
