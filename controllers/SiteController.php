@@ -82,7 +82,7 @@ class SiteController extends Controller
             ],
         ]);
 
-        $this->view->title = 'Your best metches';
+        $this->view->title = 'Your best matches';
         return $this->render('index', ['dataProvider' => $dataProvider]);
         
     }
