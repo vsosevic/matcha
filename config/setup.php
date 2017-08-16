@@ -89,6 +89,7 @@ try {
 			(Id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 			message_from INT(6) UNSIGNED NOT NULL,
 			message_to INT(6) UNSIGNED NOT NULL,
+            seen TINYINT DEFAULT 0,
 			date TIMESTAMP,
 			message LONGTEXT NOT NULL,
 			FOREIGN KEY (message_from) REFERENCES Users (Id)

@@ -70,4 +70,8 @@ class Chat extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Users::className(), ['Id' => 'message_to']);
     }
+
+    public static function findByMessageFrom($userId) {
+        return self::findAll(['message_from' => $userId]);
+    }
 }
