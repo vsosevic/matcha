@@ -7,9 +7,12 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 
 // $this->title = 'Matcha';
+
+$this->title = 'Chat';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<a href="#" style="">
+<a href="with/<?php echo $model['user_name'] ?>" style="text-decoration: none;">
 
 <div class="row is-table-row">
 

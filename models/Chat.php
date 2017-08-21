@@ -71,7 +71,48 @@ class Chat extends \yii\db\ActiveRecord
         return $this->hasOne(Users::className(), ['Id' => 'message_to']);
     }
 
-    public static function findByMessageFrom($userId) {
+    public static function findByMessageFrom($userId) 
+    {
         return self::findAll(['message_from' => $userId]);
     }
+
+    /**
+     * returns @string separated with comas of users ids "2,4,6,..."
+     */
+    public static function getAllUsersChattingWith() 
+    {
+        $allUsersIdChattingWith = array();
+        
+        $messages = self::find()
+            ->where(['message_from' => Yii::$app->user->identity->Id])
+            ->all();
+
+        foreach ($messages as $value) {
+            $allUsersIdChattingWith[] = $value->message_to;
+        }
+
+        $messages = self::find()
+            ->where(['message_to' => Yii::$app->user->identity->Id])
+            ->all();
+            
+        foreach ($messages as $value) {
+            $allUsersIdChattingWith[] = $value->message_from;
+        }
+
+        $allUsersIdChattingWith = array_unique($allUsersIdChattingWith);
+
+        return implode(',', $allUsersIdChattingWith);
+    }
+
+    public static function getAllMessagesBetweenUsers($firstUserId, $secondUserId)
+    {
+        $messages = self::find()
+            ->where(['message_from' => $firstUserId, 'message_to' => $secondUserId])
+            ->orWhere(['message_from' => $secondUserId, 'message_to' => $firstUserId])
+            ->orderBy('date')
+            ->all();
+
+        return $messages;
+    }
+
 }

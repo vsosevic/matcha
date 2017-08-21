@@ -44,6 +44,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                    '<controller:\w+>/<action:\w+>/<user_name>' => '<controller>/<action>'
             ],
         ],
         'geolocation' => [ 
