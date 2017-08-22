@@ -101,6 +101,10 @@ class Chat extends \yii\db\ActiveRecord
 
         $allUsersIdChattingWith = array_unique($allUsersIdChattingWith);
 
+        if (empty($messages)) {
+            return "''";
+        }
+        
         return implode(',', $allUsersIdChattingWith);
     }
 

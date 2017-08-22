@@ -4,6 +4,8 @@ use yii\widgets\ListView;
 /* @var $this yii\web\View */
 
 // $this->title = 'Matcha';
+$this->title = 'Chat';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?= ListView::widget([
@@ -15,7 +17,7 @@ use yii\widgets\ListView;
         'class' => 'user-chat',
     ],
 
-    'emptyText' => 'No chats yet :(',
+    'emptyText' => 'You have no chats yet ;( Wait for smb to like you back',
     'emptyTextOptions' => [
         'tag' => 'p'
     ],
@@ -26,8 +28,5 @@ use yii\widgets\ListView;
         'class' => 'list-summary'
     ],
 
-
-]); ?>
-
-
-
+]);
+?>

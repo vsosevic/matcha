@@ -67,16 +67,13 @@ $this->params['breadcrumbs'][] = $this->title;
 	</div>
 </div>
 
-<div id='demo'></div>
+<!-- <div id='demo'></div> -->
 
 <?php
-	// echo ($_SERVER['SERVER_ADDR']);
-  // print_r(yii::$app->geolocation->getInfo('173.194.118.22'));
-print_r(yii::$app->geoplugin->locateCity()['geoplugin_city']);
-
+// print_r(yii::$app->geoplugin->locateCity()['geoplugin_city']);
 ?>
 
-<script type="text/javascript" src="/matcha/web/assets/matchaJS/geoscript.js"></script>
+<script type="text/javascript" src="<?php echo Yii::$app->request->baseUrl ?>/assets/matchaJS/geoscript.js"></script>
 
 
 

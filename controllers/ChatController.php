@@ -13,8 +13,10 @@ class ChatController extends Controller
 {
     public function actionIndex ()
     {
-
+        
         $usersForQuery = Chat::getAllUsersChattingWith();
+
+        $this->view->title = 'Chat';
 
         $dataProvider = new SqlDataProvider([
             'sql' => "SELECT * FROM Users WHERE id IN (". $usersForQuery .")",
@@ -28,7 +30,6 @@ class ChatController extends Controller
             ],
         ]);
 
-        $this->view->title = 'Chat';
         return $this->render('index', ['dataProvider' => $dataProvider]);
 
         // $messages = Chat::find()
@@ -48,9 +49,11 @@ class ChatController extends Controller
 
         $messages = Chat::getAllMessagesBetweenUsers($userId->Id, Yii::$app->user->identity->Id);
         
-        foreach ($messages as $message) {
-            echo $message->message . "<br>";
-        }
+        // foreach ($messages as $message) {
+        //     echo $message->message . "<br>";
+        // }
+
+        return $this->render('chatroom');
     }
 }
 
