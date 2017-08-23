@@ -36,3 +36,6 @@ config/db.php
 #user's photos
 web/uploads
 
+#congfig db
+config/database.php
+config/db.php

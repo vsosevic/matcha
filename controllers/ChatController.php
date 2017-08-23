@@ -8,12 +8,15 @@ use app\models\Users;
 use yii\data\ArrayDataProvider;
 use yii\data\SqlDataProvider;
 use Yii;
+use yii\helpers\Url;
 
 class ChatController extends Controller
 {
     public function actionIndex ()
     {
-        
+        if (Yii::$app->user->isGuest)
+            return $this->redirect(Url::to(['users/login'])); 
+
         $usersForQuery = Chat::getAllUsersChattingWith();
 
         $this->view->title = 'Chat';

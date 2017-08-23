@@ -3,8 +3,11 @@ use app\models\Avatars;
 
 ?>
 
+<script src="/matcha/web/assets/39607ace/jquery.js"></script>
+
+
 <div class="col-sm-3 col-sm-offset-4 frame">
-    <ul></ul>
+    <ul class="chat-ul"></ul>
     <div>
         <div class="msj-rta macro" style="margin:auto">                        
             <div class="text text-r" style="background:whitesmoke !important">
