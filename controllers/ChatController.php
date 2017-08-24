@@ -58,6 +58,39 @@ class ChatController extends Controller
 
         return $this->render('chatroom');
     }
+
+    public function actionGetMessageHistory()
+    {
+        $user_name = $_POST['data'];
+        json_decode($user_name);
+
+        $userId = Users::findByUsername($user_name);
+
+        $messages = Chat::getAllMessagesBetweenUsers($userId->Id, Yii::$app->user->identity->Id);
+        $chat = array();
+        $i = 0;
+        foreach ($messages as $message) {
+            if ($message->message_from == Yii::$app->user->identity->Id) {
+                $chat[$i]['writtenBy'] = "me";
+            } else {
+                $chat[$i]['writtenBy'] = "you";
+            }
+            $chat[$i]['message'] = $message->message;
+            $chat[$i]['date'] = $message->date;
+            $i++;
+        }
+        print(json_encode($chat));
+    }
+
+    public function actionGetNewMessage()
+    {
+        header('Content-Type: text/event-stream');
+        header('Cache-Control: no-cache');
+
+        // echo "data: $chat\n\n";
+        // flush();
+    }
+
 }
 
 ?>
