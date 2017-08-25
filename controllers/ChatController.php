@@ -46,11 +46,11 @@ class ChatController extends Controller
 
     public function actionWith ($user_name)
     {
-        $userChattingWith = Users::findByUserName($user_name);
+        // $userChattingWith = Users::findByUserName($user_name);
 
-        $userId = Users::findByUsername($user_name);
+        // $userId = Users::findByUsername($user_name);
 
-        $messages = Chat::getAllMessagesBetweenUsers($userId->Id, Yii::$app->user->identity->Id);
+        // $messages = Chat::getAllMessagesBetweenUsers($userId->Id, Yii::$app->user->identity->Id);
         
         // foreach ($messages as $message) {
         //     echo $message->message . "<br>";
@@ -64,9 +64,9 @@ class ChatController extends Controller
         $user_name = $_POST['data'];
         json_decode($user_name);
 
-        $userId = Users::findByUsername($user_name);
+        $userChattingWith = Users::findByUsername($user_name);
 
-        $messages = Chat::getAllMessagesBetweenUsers($userId->Id, Yii::$app->user->identity->Id);
+        $messages = Chat::getAllMessagesBetweenUsers($userChattingWith->Id, Yii::$app->user->identity->Id);
         $chat = array();
         $i = 0;
         foreach ($messages as $message) {
@@ -74,9 +74,12 @@ class ChatController extends Controller
                 $chat[$i]['writtenBy'] = "me";
             } else {
                 $chat[$i]['writtenBy'] = "you";
+                $message->seen = 1;
+                $message->save();
             }
             $chat[$i]['message'] = $message->message;
             $chat[$i]['date'] = $message->date;
+
             $i++;
         }
         print(json_encode($chat));
@@ -87,8 +90,33 @@ class ChatController extends Controller
         header('Content-Type: text/event-stream');
         header('Cache-Control: no-cache');
 
-        // echo "data: $chat\n\n";
-        // flush();
+        // echo $_GET['chatWith']; die();
+        $userChattingWith = Users::findByUsername($_GET['chatWith']);
+        // var_dump($userChattingWith->Id); die();
+        $stringMessages = Chat::getNewMessagesBetweenUsers($userChattingWith->Id, Yii::$app->user->identity->Id);
+        // var_dump($stringMessages); die();
+        // $stringMessages = "123";
+        echo "data: $stringMessages\n\n";
+        flush();
+    }
+
+    public function actionSendMessage()
+    {
+        $user_name = $_POST['chatWith'];
+        $message = $_POST['message'];
+        json_decode($message);
+        json_decode($user_name);
+
+
+        $userChattingWith = Users::findByUsername($user_name);
+
+        $chat = new Chat;
+        $chat->message_from = Yii::$app->user->identity->Id;
+        $chat->message_to = $userChattingWith->Id;
+        $chat->message = $message;
+        $chat->save();
+
+        print(json_encode($message));
     }
 
 }

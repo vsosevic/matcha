@@ -108,6 +108,9 @@ class Chat extends \yii\db\ActiveRecord
         return implode(',', $allUsersIdChattingWith);
     }
 
+    /*
+     * returns @obj_messages with all messages from DB
+     */
     public static function getAllMessagesBetweenUsers($firstUserId, $secondUserId)
     {
         $messages = self::find()
@@ -117,6 +120,30 @@ class Chat extends \yii\db\ActiveRecord
             ->all();
 
         return $messages;
+    }
+
+    /*
+     * returns @string with all new messages from one user in one string
+     */
+    public static function getNewMessagesBetweenUsers($firstUserId, $secondUserId)
+    {
+        $messages = self::find()
+            ->where(['message_from' => $firstUserId, 'message_to' => $secondUserId, 'seen' => 0])
+            ->orderBy('date')
+            ->all();
+
+        $stringMessages = '';
+
+        foreach ($messages as $message) {
+            $stringMessages = $stringMessages . $message->message . "<br>";
+            $message->seen = 1;
+            $message->save();
+        }
+
+        if (empty($stringMessages)) {
+            return NULL;
+        }
+        return $stringMessages;
     }
 
 }
