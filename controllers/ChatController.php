@@ -9,14 +9,23 @@ use app\models\Users;
 use yii\data\ArrayDataProvider;
 use yii\data\SqlDataProvider;
 use Yii;
-use yii\helpers\Url;
+// use yii\helpers\Url;
 
 class ChatController extends Controller
 {
+
+    // public function beforeAction()
+    // {
+    //     if (Yii::$app->user->isGuest)
+    //     {
+    //         return $this->redirect(Url::to(['users/login'])); 
+    //     }
+    // }
+
     public function actionIndex ()
     {
         if (Yii::$app->user->isGuest)
-            return $this->redirect(Url::to(['users/login'])); 
+            return $this->redirect(['users/login']); 
 
         $usersForQuery = Chat::getAllUsersChattingWith();
 
@@ -47,6 +56,8 @@ class ChatController extends Controller
 
     public function actionWith ($user_name)
     {
+        if (Yii::$app->user->isGuest)
+            return $this->redirect(['users/login']);
         // $userChattingWith = Users::findByUserName($user_name);
 
         // $userId = Users::findByUsername($user_name);
@@ -56,8 +67,7 @@ class ChatController extends Controller
         // foreach ($messages as $message) {
         //     echo $message->message . "<br>";
         // }
-
-        return $this->render('chatroom');
+        return $this->render('chatroom', ['chatWith' => $user_name]);
     }
 
     public function actionGetMessageHistory()

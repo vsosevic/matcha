@@ -150,7 +150,7 @@ class UsersController extends \yii\web\Controller
             $avatars->$avatarId = 'uploads/' . $new_image_name;
             if($avatars->save()) 
             {
-                if ($delete_image !== "uploads/no_image.png") 
+                if ($delete_image !== "sources/no_image.png") 
                 {
                     unlink($delete_image);
                 }
