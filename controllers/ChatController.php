@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use yii\web\Controller;
 use app\models\Chat;
+use app\models\Avatars;
 use app\models\Users;
 use yii\data\ArrayDataProvider;
 use yii\data\SqlDataProvider;
@@ -90,12 +91,8 @@ class ChatController extends Controller
         header('Content-Type: text/event-stream');
         header('Cache-Control: no-cache');
 
-        // echo $_GET['chatWith']; die();
         $userChattingWith = Users::findByUsername($_GET['chatWith']);
-        // var_dump($userChattingWith->Id); die();
         $stringMessages = Chat::getNewMessagesBetweenUsers($userChattingWith->Id, Yii::$app->user->identity->Id);
-        // var_dump($stringMessages); die();
-        // $stringMessages = "123";
         echo "data: $stringMessages\n\n";
         flush();
     }
@@ -117,6 +114,20 @@ class ChatController extends Controller
         $chat->save();
 
         print(json_encode($message));
+    }
+
+    public function actionGetAvatarsForChat()
+    {
+        $user_name = $_POST['chatWith'];
+        json_decode($user_name);
+
+        $userChattingWith = Users::findByUsername($user_name);
+
+        $json_response = array();
+        $json_response['me'] = Avatars::getAvatarsByUserId(Yii::$app->user->identity->Id)->avatar1;
+        $json_response['you'] = Avatars::getAvatarsByUserId($userChattingWith->Id)->avatar1;
+
+        print(json_encode($json_response));
     }
 
 }
