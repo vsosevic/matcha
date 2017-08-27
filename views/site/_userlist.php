@@ -9,7 +9,7 @@ use yii\grid\GridView;
 // $this->title = 'Matcha';
 ?>
 
-<div class="row is-table-row">
+<div class="row is-table-row" style="margin-bottom: 10px;">
 
     <div class="col-sm-2">
         <a href="#" class="text-center" ><img src="<?php echo Yii::$app->request->baseUrl . '/' . 'sources/like.png' ?>" class="img img-responsive"></a>            

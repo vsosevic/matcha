@@ -101,7 +101,7 @@ class Chat extends \yii\db\ActiveRecord
 
         $allUsersIdChattingWith = array_unique($allUsersIdChattingWith);
 
-        if (empty($messages)) {
+        if (empty($allUsersIdChattingWith)) {
             return "''";
         }
         
@@ -116,6 +116,7 @@ class Chat extends \yii\db\ActiveRecord
         $messages = self::find()
             ->where(['message_from' => $firstUserId, 'message_to' => $secondUserId])
             ->orWhere(['message_from' => $secondUserId, 'message_to' => $firstUserId])
+            ->limit(10)
             ->orderBy('date')
             ->all();
 

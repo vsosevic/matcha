@@ -28,7 +28,6 @@ class ChatController extends Controller
             return $this->redirect(['users/login']); 
 
         $usersForQuery = Chat::getAllUsersChattingWith();
-
         $this->view->title = 'Chat';
 
         $dataProvider = new SqlDataProvider([
@@ -93,7 +92,9 @@ class ChatController extends Controller
 
             $i++;
         }
-        print(json_encode($chat));
+        if(!empty($chat)) {
+            print(json_encode($chat));
+        }
     }
 
     public function actionGetNewMessage()
