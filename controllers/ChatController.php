@@ -93,7 +93,8 @@ class ChatController extends Controller
             $i++;
         }
         if(!empty($chat)) {
-            print(json_encode($chat));
+            // recerse chat so that we have correct order from bottom to top in the chat
+            print(json_encode(array_reverse($chat)));
         }
     }
 

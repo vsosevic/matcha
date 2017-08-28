@@ -117,7 +117,7 @@ class Chat extends \yii\db\ActiveRecord
             ->where(['message_from' => $firstUserId, 'message_to' => $secondUserId])
             ->orWhere(['message_from' => $secondUserId, 'message_to' => $firstUserId])
             ->limit(10)
-            ->orderBy('date')
+            ->orderBy(['date' => SORT_DESC])
             ->all();
 
         return $messages;
