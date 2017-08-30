@@ -65,7 +65,15 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $query = Users::find()->joinWith('city', true)->where(['city_id' => 1]);
+        $myself = "''";
+        if (isset(Yii::$app->user->identity->Id)) {
+            $myself = Yii::$app->user->identity->Id;
+        }
+
+        $query = Users::find()
+        ->joinWith('city', true)
+        ->where(['city_id' => 1])
+        ->andWhere(['<>', 'Users.Id', $myself]);
         // echo "<pre>";
         // var_dump($query); die();
 
