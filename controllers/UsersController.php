@@ -11,6 +11,7 @@ use app\models\Interests;
 use app\models\Userstointerests;
 use app\models\Cities;
 use app\models\Avatars;
+use app\models\Likes;
 use yii\web\UploadedFile;
 
 class UsersController extends \yii\web\Controller
@@ -183,4 +184,15 @@ class UsersController extends \yii\web\Controller
             'model' => $model,
             ]);
     }
+
+    public function actionLike() {
+        $user_id = $_POST['likeUserId'];
+        json_decode($user_id);
+
+        $like = new Likes;
+        $like->like_from = Yii::$app->user->identity->Id;
+        $like->like_to = $user_id;
+        $like->save();
+    }
+
 }

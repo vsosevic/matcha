@@ -53,9 +53,16 @@ $config = [
         'geoplugin' => [
         'class' => 'app\vendor\rodzadra\geopluginClass\Geoplugin',
         ],
-        
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'jsOptions' => [ 'position' => \yii\web\View::POS_HEAD ],
+                ],
+            ],
+        ],
     ],
     'params' => $params,
+
 ];
 
 if (YII_ENV_DEV) {

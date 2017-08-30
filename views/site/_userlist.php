@@ -11,9 +11,9 @@ use yii\grid\GridView;
 
 <div class="row is-table-row" style="margin-bottom: 10px;">
 
-    <div class="col-sm-2">
-        <a href="#" class="text-center" ><img src="<?php echo Yii::$app->request->baseUrl . '/' . 'sources/like.png' ?>" class="img img-responsive"></a>            
-        <a href="#" class="text-center" style="display: none;"><img src="<?php echo Yii::$app->request->baseUrl . '/' . 'sources/liked.png' ?>" class="img img-responsive"></a>
+    <div class="col-sm-2 user-id-like" id="<?php echo $model->Id ?>">
+        <a href="#" id="like" class="text-center" ><img src="<?php echo Yii::$app->request->baseUrl . '/sources/like.png' ?>" class="img img-responsive"></a>
+        <a href="#" id="unlike" class="text-center" style="display: none;"><img src="<?php echo Yii::$app->request->baseUrl .'/sources/liked.png' ?>" class="img img-responsive"></a>
     </div>
 
     <div class="col-sm-4 bg-success text-center">
