@@ -195,4 +195,14 @@ class UsersController extends \yii\web\Controller
         // $like->save();
     }
 
+    public function actionUnlike() {
+        $user_id = $_POST['likeUserId'];
+        json_decode($user_id);
+
+        // $like = new Likes;
+        // $like->like_from = Yii::$app->user->identity->Id;
+        // $like->like_to = $user_id;
+        // $like->save();
+    }
+
 }
