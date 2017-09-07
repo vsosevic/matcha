@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\ContactForm;
 use app\models\Users;
+use app\models\Likes;
 use app\models\Avatars;
 use app\models\Userstointerests;
 use app\models\Cities;
@@ -90,9 +91,18 @@ class SiteController extends Controller
             ],
         ]);
 
-        $this->view->title = 'Your best matches';
-        return $this->render('index', ['dataProvider' => $dataProvider]);
+        $queryLikes = Likes::find(['like_to'])
+        ->where(['like_from' => Yii::$app->user->identity->Id])
+        ->asArray()
+        ->all();
+
+        $likes = array();
+        foreach ($queryLikes as $value) {
+            $likes[] = $value['like_to'];
+        }
         
+        $this->view->title = 'Your best matches';
+        return $this->render('index', ['dataProvider' => $dataProvider, 'likes' => $likes]);
     }
 
     

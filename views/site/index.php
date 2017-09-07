@@ -2,7 +2,6 @@
 use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
-
 // $this->title = 'Matcha';
 ?>
 
@@ -12,6 +11,7 @@ use yii\widgets\ListView;
     'dataProvider' => $dataProvider,
 
     'itemView' => '_userlist',
+    'viewParams' => ['likes' => $likes],
     'itemOptions' => [
         'tag' => 'div',
         'class' => 'user-card',
@@ -28,8 +28,4 @@ use yii\widgets\ListView;
         'class' => 'list-summary'
     ],
 
-
 ]); ?>
-
-
-
