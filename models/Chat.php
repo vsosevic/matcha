@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use app\models\Likes;
+use yii\db\mssql\PDO;
 
 /**
  * This is the model class for table "chat".
@@ -86,7 +88,7 @@ class Chat extends \yii\db\ActiveRecord
         $messages = self::find()
             ->where(['message_from' => Yii::$app->user->identity->Id])
             ->all();
-
+ 
         foreach ($messages as $value) {
             $allUsersIdChattingWith[] = $value->message_to;
         }
@@ -106,6 +108,39 @@ class Chat extends \yii\db\ActiveRecord
         }
         
         return implode(',', $allUsersIdChattingWith);
+    }
+
+    /**
+     * returns @string separated with comas of users ids "2,4,6,..."
+     */
+    public static function getAllUsersWithMutualLikes() 
+    {
+        $likedUsers = array();
+
+        $likedUsersQuery = Likes::find()
+            ->where(['like_from' => Yii::$app->user->identity->Id])
+            ->all();
+
+        foreach ($likedUsersQuery as $value) {
+            $likedUsers[] = $value->like_to;
+        }
+
+        $mutualLikedUsers = array();
+
+        $mutualLikedUsersQuery = Likes::find()
+        ->where(['in', 'like_from', $likedUsers])
+        ->andWhere(['like_to' => Yii::$app->user->identity->Id])
+        ->all();
+
+        foreach ($mutualLikedUsersQuery as $value) {
+            $mutualLikedUsers[] = $value->like_from;
+        }
+
+        if (empty($mutualLikedUsers)) {
+            return "''";
+        }
+        
+        return implode(',', $mutualLikedUsers);
     }
 
     /*

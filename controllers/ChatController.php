@@ -28,10 +28,13 @@ class ChatController extends Controller
             return $this->redirect(['users/login']); 
 
         $usersForQuery = Chat::getAllUsersChattingWith();
+
+        $usersWithMutualLikes = Chat::getAllUsersWithMutualLikes();
+
         $this->view->title = 'Chat';
 
         $dataProvider = new SqlDataProvider([
-            'sql' => "SELECT * FROM Users WHERE id IN (". $usersForQuery .")",
+            'sql' => "SELECT * FROM Users WHERE id IN (". $usersWithMutualLikes .")",
             'totalCount' => 1,
             'pagination' => [
                 'pageSize' => 10,
@@ -44,13 +47,6 @@ class ChatController extends Controller
 
         return $this->render('index', ['dataProvider' => $dataProvider]);
 
-        // $messages = Chat::find()
-        //     ->where(['message_from' => 1])
-        //     ->orWhere(['message_to' => 1])
-        //     ->orderBy('date')
-        //     ->all();
-
-        // var_dump($message_from);
     }
 
     public function actionWith ($user_name)
