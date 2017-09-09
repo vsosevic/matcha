@@ -27,8 +27,6 @@ class ChatController extends Controller
         if (Yii::$app->user->isGuest)
             return $this->redirect(['users/login']); 
 
-        $usersForQuery = Chat::getAllUsersChattingWith();
-
         $usersWithMutualLikes = Chat::getAllUsersWithMutualLikes();
 
         $this->view->title = 'Chat';
