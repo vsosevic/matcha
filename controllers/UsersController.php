@@ -13,6 +13,7 @@ use app\models\Cities;
 use app\models\Avatars;
 use app\models\Likes;
 use yii\web\UploadedFile;
+use yii\db\Expression;
 
 class UsersController extends \yii\web\Controller
 {
@@ -28,6 +29,11 @@ class UsersController extends \yii\web\Controller
         }
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+
+            $user = Users::findByUsername(Yii::$app->user->identity->user_name);
+            $user->last_connection = new Expression('NOW()');
+            $user->save();
+
             return $this->goBack();
         }
         return $this->render('login', [
@@ -204,6 +210,25 @@ class UsersController extends \yii\web\Controller
         ->createCommand()
         ->delete('Likes', ['like_from' => Yii::$app->user->identity->Id, 'like_to' => $user_id])
         ->execute();
+    }
+
+    public function actionGetOnlineStatus() {
+        header('Content-Type: text/event-stream');
+        header('Cache-Control: no-cache');
+
+        $user_name = $_GET['chatWith'];
+        json_decode($user_name);
+
+        $userChattingWith = Users::findByUsername($user_name);
+
+        $timeFromLastConnection = time() - strtotime($userChattingWith->last_connection);
+
+        if ($timeFromLastConnection < 1000) {
+            echo "data: online\n\n";
+        } else {
+            echo "data: offline\n\n";
+        }
+        flush();
     }
 
 }

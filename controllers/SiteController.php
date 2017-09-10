@@ -67,8 +67,19 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $myself = "''";
+        $likes = array();
+
         if (isset(Yii::$app->user->identity->Id)) {
             $myself = Yii::$app->user->identity->Id;
+
+            $queryLikes = Likes::find(['like_to'])
+                ->where(['like_from' => Yii::$app->user->identity->Id])
+                ->asArray()
+                ->all();
+
+            foreach ($queryLikes as $value) {
+                $likes[] = $value['like_to'];
+            }
         }
 
         $query = Users::find()
@@ -90,16 +101,6 @@ class SiteController extends Controller
                 ]
             ],
         ]);
-
-        $queryLikes = Likes::find(['like_to'])
-        ->where(['like_from' => Yii::$app->user->identity->Id])
-        ->asArray()
-        ->all();
-
-        $likes = array();
-        foreach ($queryLikes as $value) {
-            $likes[] = $value['like_to'];
-        }
         
         $this->view->title = 'Your best matches';
         return $this->render('index', ['dataProvider' => $dataProvider, 'likes' => $likes]);

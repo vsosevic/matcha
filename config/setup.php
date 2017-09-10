@@ -26,7 +26,7 @@ try {
 			gender TINYINT DEFAULT 0,
 			orientation TINYINT DEFAULT 0,
 			about LONGTEXT NULL,
-			registration_date TIMESTAMP,
+			registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 			city_id INT(4) UNSIGNED,
 			fame_rating INT(2) DEFAULT 1,
 			age TINYINT UNSIGNED,

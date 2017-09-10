@@ -6,6 +6,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Chat', 'url' => ['/chat/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<div class="online-status"></div>
+
 <div class="col-sm-3 col-sm-offset-4 frame">
     <ul class="chat-ul"></ul>
     <div>
