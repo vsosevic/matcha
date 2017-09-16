@@ -145,6 +145,8 @@ setTimeout(
             }
         };
 
+        var statusOnline = new EventSource(coreUrl + "/users/set-online-status");
+
     }, 3000);
 
 

@@ -21,9 +21,11 @@ use yii\grid\GridView;
     </div>
 
     <div class="col-sm-4 bg-success text-center">
-        <img src="<?php echo Yii::$app->request->baseUrl . '/' . Avatars::getAvatarsByUserId($model->id)->avatar1 ?>" class="img-circle img-responsive center-block">
-        <br>
-        Fame-rating: <code> <?php echo $model->fame_rating; ?> </code>
+        <a href="../users/user/<?php echo $model->user_name ?>">
+            <img src="<?php echo Yii::$app->request->baseUrl . '/' . Avatars::getAvatarsByUserId($model->id)->avatar1 ?>" class="img-circle img-responsive center-block">
+            <br>
+            Fame-rating: <code> <?php echo $model->fame_rating; ?> </code>
+        </a>
     </div>
     
     <div class="col-sm-4 bg-info">

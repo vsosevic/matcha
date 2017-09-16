@@ -29,16 +29,40 @@ class UsersController extends \yii\web\Controller
         }
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-
-            $user = Users::findByUsername(Yii::$app->user->identity->user_name);
-            $user->last_connection = new Expression('NOW()');
-            $user->save();
+            // $user = Users::findByUsername(Yii::$app->user->identity->user_name);
+            // $user->last_connection = new Expression('NOW()');
+            // $user->save();
 
             return $this->goBack();
         }
         return $this->render('login', [
             'model' => $model,
         ]);
+    }
+
+    public function actionUser($user_name)
+    {
+        $model = Users::findByUsername($user_name);
+        $avatars = Avatars::getAvatarsByUserId($model->Id);
+        $interests = Userstointerests::getInterestsToStringByUserId($model->Id);
+
+        $myself = "''";
+        $likes = array();
+
+        if (isset(Yii::$app->user->identity->Id)) {
+            $myself = Yii::$app->user->identity->Id;
+
+            $queryLikes = Likes::find(['like_to'])
+                ->where(['like_from' => Yii::$app->user->identity->Id])
+                ->asArray()
+                ->all();
+
+            foreach ($queryLikes as $value) {
+                $likes[] = $value['like_to'];
+            }
+        }
+
+        return $this->render('userpage', ['model' => $model, 'avatars' => $avatars, 'interests' => $interests, 'likes' => $likes]);
     }
 
      /**
