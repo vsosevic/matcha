@@ -5,7 +5,7 @@ use yii\widgets\ListView;
 // $this->title = 'Matcha';
 ?>
 
-<script type="text/javascript" src="<?php echo Yii::$app->request->baseUrl ?>/assets/matchaJS/like.js"></script>
+<script type="text/javascript" src="<?php echo Yii::$app->request->baseUrl ?>/matchaJS/like.js"></script>
 
 <?= ListView::widget([
     'dataProvider' => $dataProvider,

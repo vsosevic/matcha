@@ -84,7 +84,7 @@ class SiteController extends Controller
 
         $query = Users::find()
         ->joinWith('city', true)
-        ->where(['city_id' => 1])
+        ->where(['fame_rating' => 1])
         ->andWhere(['<>', 'Users.Id', $myself]);
         // echo "<pre>";
         // var_dump($query); die();

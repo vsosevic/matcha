@@ -223,11 +223,23 @@ class UsersController extends \yii\web\Controller
 
         $timeFromLastConnection = time() - strtotime($userChattingWith->last_connection);
 
-        if ($timeFromLastConnection < 1000) {
+        if ($timeFromLastConnection < 10) {
             echo "data: online\n\n";
         } else {
             echo "data: offline\n\n";
         }
+        flush();
+    }
+
+    public function actionSetOnlineStatus() {
+        header('Content-Type: text/event-stream');
+        header('Cache-Control: no-cache');
+
+        $user = Users::findIdentity(Yii::$app->user->identity->Id);
+        $user->last_connection = date('Y-m-d H:i:s');
+        $user->save();
+
+        echo "data: saved\n\n";
         flush();
     }
 

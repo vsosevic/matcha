@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
 // print_r(yii::$app->geoplugin->locateCity()['geoplugin_city']);
 ?>
 
-<script type="text/javascript" src="<?php echo Yii::$app->request->baseUrl ?>/assets/matchaJS/geoscript.js"></script>
+<script type="text/javascript" src="<?php echo Yii::$app->request->baseUrl ?>/matchaJS/geoscript.js"></script>
 
 
 

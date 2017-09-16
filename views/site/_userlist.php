@@ -50,7 +50,7 @@ use yii\grid\GridView;
         </p>
         <p>
             <span class="text-muted">City: </span>
-            <span><?php echo $model->city->city ?></span>
+            <span><?php if(isset($model->city->city)) { echo $model->city->city; } ?></span>
         </p>
         <p>
             <span class="text-muted">About: </span>

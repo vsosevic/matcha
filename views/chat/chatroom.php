@@ -19,5 +19,5 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 
-<script type="text/javascript" src="<?php echo Yii::$app->request->baseUrl ?>/assets/matchaJS/chat.js"></script>
+<script type="text/javascript" src="<?php echo Yii::$app->request->baseUrl ?>/matchaJS/chat.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::$app->request->baseUrl ?>/css/chat.css">
