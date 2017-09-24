@@ -17,7 +17,7 @@ use yii\widgets\ListView;
         'class' => 'user-card',
     ],
 
-    'emptyText' => 'No matches yet :(',
+    'emptyText' => 'Nothing to show yet :(',
     'emptyTextOptions' => [
         'tag' => 'p'
     ],

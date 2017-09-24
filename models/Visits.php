@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "Visites".
+ * This is the model class for table "Visits".
  *
  * @property string $Id
  * @property string $visit_from
@@ -15,14 +15,14 @@ use Yii;
  * @property Users $visitFrom
  * @property Users $visitTo
  */
-class Visites extends \yii\db\ActiveRecord
+class Visits extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'Visites';
+        return 'Visits';
     }
 
     /**
@@ -67,4 +67,23 @@ class Visites extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Users::className(), ['Id' => 'visit_to']);
     }
+
+    /**
+     * @return @string separated with comas of users ids "2,4,6,..."
+     */
+    public static function getVisitsFromUsers() {
+        $visitUsers = array();
+
+        $visits = Self::find()
+        ->where(['visit_to' => Yii::$app->user->identity->Id])
+        ->asArray()
+        ->all();
+
+        foreach ($visits as $visit) {
+            $visitUsers[] = $visit['visit_from'];
+        }
+
+        return $visitUsers;
+    }
+    
 }

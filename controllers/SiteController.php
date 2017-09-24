@@ -13,6 +13,7 @@ use app\models\Likes;
 use app\models\Avatars;
 use app\models\Userstointerests;
 use app\models\Cities;
+use app\models\Visits;
 use yii\data\ActiveDataProvider;
 
 class SiteController extends Controller
@@ -60,34 +61,25 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays homepage.
+     * Displays homepage with matched users.
      *
      * @return string
      */
     public function actionIndex()
     {
         $myself = "''";
+
         $likes = array();
 
         if (isset(Yii::$app->user->identity->Id)) {
             $myself = Yii::$app->user->identity->Id;
-
-            $queryLikes = Likes::find(['like_to'])
-                ->where(['like_from' => Yii::$app->user->identity->Id])
-                ->asArray()
-                ->all();
-
-            foreach ($queryLikes as $value) {
-                $likes[] = $value['like_to'];
-            }
+            $likes = Likes::getLikesForUser();
         }
 
         $query = Users::find()
         ->joinWith('city', true)
         ->where(['fame_rating' => 1])
         ->andWhere(['<>', 'Users.Id', $myself]);
-        // echo "<pre>";
-        // var_dump($query); die();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -106,7 +98,35 @@ class SiteController extends Controller
         return $this->render('index', ['dataProvider' => $dataProvider, 'likes' => $likes]);
     }
 
-    
+    /**
+     * Page with visits history
+     *
+     * @return string
+     */
+    public function actionVisits()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $likes = Likes::getLikesForUser();
+
+        $visits = Visits::getVisitsFromUsers();
+
+        $query = Users::find()
+        ->joinWith('city', true)
+        ->where(['in', 'Users.Id', $visits]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        $this->view->title = "See who's come to your profile";
+        return $this->render('index', ['dataProvider' => $dataProvider, 'likes' => $likes]);
+    }
 
     /**
      * Logout action.

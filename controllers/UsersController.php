@@ -12,7 +12,7 @@ use app\models\Userstointerests;
 use app\models\Cities;
 use app\models\Avatars;
 use app\models\Likes;
-use app\models\Visites;
+use app\models\Visits;
 use yii\web\UploadedFile;
 use yii\db\Expression;
 
@@ -47,7 +47,7 @@ class UsersController extends \yii\web\Controller
         $avatars = Avatars::getAvatarsByUserId($model->Id);
         $interests = Userstointerests::getInterestsToStringByUserId($model->Id);
 
-        $visit = new Visites;
+        $visit = new Visits;
         $visit->visit_from = Yii::$app->user->identity->Id;
         $visit->visit_to = $model->Id;
         $visit->save();
