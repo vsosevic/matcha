@@ -159,6 +159,36 @@ class SiteController extends Controller
     }
 
     /**
+     * Page with users who liked you
+     *
+     * @return string
+     */
+    public function actionLiked()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $likes = Likes::getLikesForUser();
+
+        $liked = Likes::getLikesFromUsers();
+
+        $query = Users::find()
+        ->joinWith('city', true)
+        ->where(['in', 'Users.Id', $liked]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        $this->view->title = "See whom you've visited";
+        return $this->render('index', ['dataProvider' => $dataProvider, 'likes' => $likes]);
+    }
+
+    /**
      * Logout action.
      *
      * @return Response
