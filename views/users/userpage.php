@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="col-sm-12 bg-info">
 		<h3><?php echo $model->first_name. " " .$model->last_name; ?>
 			<small> <?php echo $model->user_name ?> </small>
+			<div class="online-status"></div>
 		</h3>
 		<br>
 		<hr>
@@ -69,3 +70,4 @@ $this->params['breadcrumbs'][] = $this->title;
 	</a>
 </div>
 
+<script type="text/javascript" src="<?php echo Yii::$app->request->baseUrl ?>/matchaJS/online-status.js"></script>

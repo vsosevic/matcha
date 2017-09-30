@@ -138,15 +138,12 @@ setTimeout(
             }
         };
 
-        var status = new EventSource(coreUrl + "/users/get-online-status?chatWith=" + chatWith);
+        var status = new EventSource(coreUrl + "/users/get-online-status?user=" + chatWith);
         status.onmessage = function(event) {
             if (event.data) {
               $('.online-status').text(event.data);
             }
         };
-
-        var statusOnline = new EventSource(coreUrl + "/users/set-online-status");
-
     }, 3000);
 
 

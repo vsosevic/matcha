@@ -246,17 +246,18 @@ class UsersController extends \yii\web\Controller
         header('Content-Type: text/event-stream');
         header('Cache-Control: no-cache');
 
-        $user_name = $_GET['chatWith'];
+        $user_name = $_GET['user'];
         json_decode($user_name);
 
-        $userChattingWith = Users::findByUsername($user_name);
+        $user = Users::findByUsername($user_name);
 
-        $timeFromLastConnection = time() - strtotime($userChattingWith->last_connection);
+        $timeFromLastConnection = time() - strtotime($user->last_connection);
 
         if ($timeFromLastConnection < 10) {
-            echo "data: online\n\n";
+            echo "data: (online)\n\n";
         } else {
-            echo "data: offline\n\n";
+            $last_seen_time = date($user->last_connection);
+            echo "data: (offline. last seen $last_seen_time)\n\n";
         }
         flush();
     }
