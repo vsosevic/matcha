@@ -67,4 +67,20 @@ class Likes extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Users::className(), ['Id' => 'like_to']);
     }
+
+    public static function getLikesForUser() {
+        $likes = array();
+
+        $queryLikes = Self::find(['like_to'])
+            ->where(['like_from' => Yii::$app->user->identity->Id])
+            ->asArray()
+            ->all();
+
+        foreach ($queryLikes as $value) {
+            $likes[] = $value['like_to'];
+        }
+
+        return $likes;
+    }
+
 }

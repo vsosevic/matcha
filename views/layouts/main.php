@@ -39,7 +39,8 @@ AppAsset::register($this);
         'encodeLabels' => false,
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Chat' . Html::tag('span', '9', ['class' => 'badge']), 'url' => ['/chat/index']],
+            ['label' => 'Chat', 'url' => ['/chat/index']],
+            ['label' => 'Visits', 'url' => ['/site/visits']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             ['label' => 'SignUp', 'url' => ['/users/signup'], 'visible' => Yii::$app->user->isGuest],
