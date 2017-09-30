@@ -29,16 +29,17 @@ AppAsset::register($this);
     <?php
     NavBar::begin([
         'brandLabel' => 'Matcha',
-        'brandUrl' => Yii::$app->homeUrl,
+        'brandUrl' => Yii::$app->homeUrl . 'site/index',
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
+        'encodeLabels' => false,
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Chat', 'url' => ['/chat/index']],
+            ['label' => 'Chat' . Html::tag('span', '9', ['class' => 'badge']), 'url' => ['/chat/index']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             ['label' => 'SignUp', 'url' => ['/users/signup'], 'visible' => Yii::$app->user->isGuest],
