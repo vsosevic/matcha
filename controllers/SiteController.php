@@ -99,7 +99,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Page with visits history
+     * Page with users who's visited me
      *
      * @return string
      */
@@ -125,6 +125,36 @@ class SiteController extends Controller
         ]);
 
         $this->view->title = "See who's come to your profile";
+        return $this->render('index', ['dataProvider' => $dataProvider, 'likes' => $likes]);
+    }
+
+    /**
+     * Page with users I've visited
+     *
+     * @return string
+     */
+    public function actionVisited()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $likes = Likes::getLikesForUser();
+
+        $visits = Visits::getVisitedUsers();
+
+        $query = Users::find()
+        ->joinWith('city', true)
+        ->where(['in', 'Users.Id', $visits]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        $this->view->title = "See whom you've visited";
         return $this->render('index', ['dataProvider' => $dataProvider, 'likes' => $likes]);
     }
 

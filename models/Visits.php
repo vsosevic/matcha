@@ -69,7 +69,7 @@ class Visits extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return @string separated with comas of users ids "2,4,6,..."
+     * @return @string separated with comas of users' ids who's visited you "2,4,6,..."
      */
     public static function getVisitsFromUsers() {
         $visitUsers = array();
@@ -83,7 +83,25 @@ class Visits extends \yii\db\ActiveRecord
             $visitUsers[] = $visit['visit_from'];
         }
 
-        return $visitUsers;
+        return array_unique($visitUsers);
+    }
+
+    /**
+     * @return @string separated with comas of users ids you visited "2,4,6,..."
+     */
+    public static function getVisitedUsers() {
+        $visitUsers = array();
+
+        $visits = Self::find()
+        ->where(['visit_from' => Yii::$app->user->identity->Id])
+        ->asArray()
+        ->all();
+
+        foreach ($visits as $visit) {
+            $visitUsers[] = $visit['visit_to'];
+        }
+
+        return array_unique($visitUsers);
     }
     
 }
