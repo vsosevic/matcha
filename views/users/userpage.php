@@ -35,10 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
 		<br>
 		<hr>
 		<p>
-			<span class="text-muted">Email: </span>
-			<span><?php echo $model->email ?></span>
-		</p>
-		<p>
 			<span class="text-muted">Gender: </span>
 			<span><?php echo $model->genderList[$model->gender] ?></span>
 		</p>

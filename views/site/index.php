@@ -30,4 +30,3 @@ use yii\widgets\ListView;
 
 ]); ?>
 
-<div>Notifications<span class="badge">123</span></div>
