@@ -237,9 +237,12 @@ class UsersController extends \yii\web\Controller
         $like->like_to = $user_id;
         $like->save();
 
+        // Checking if like from that usesr exists so that notification would be "you have a like back"
+        $like_exists = Likes::checkLike($user_id, Yii::$app->user->identity->Id);
+
         $notification = new Notifications;
         $notification->users_id = $user_id;
-        $notification->notification_type = 1;
+        $notification->notification_type = $like_exists ? 3 : 1;
         $notification->save();
     }
 

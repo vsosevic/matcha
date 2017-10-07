@@ -104,4 +104,21 @@ class Likes extends \yii\db\ActiveRecord
         return $likes;
     }
 
+    /**
+     * Checking if user has a like from another user
+     *
+     * return @bool
+     */
+    public static function checkLike($like_from, $like_to) {
+        $likeExists = self::find('Id')
+        ->where(['like_from' => $like_from, 'like_to' => $like_to])
+        ->asArray()
+        ->all();
+
+        if (empty($likeExists)) {
+            return false;
+        }
+        return true;
+    }
+
 }
