@@ -69,7 +69,7 @@ class Likes extends \yii\db\ActiveRecord
     }
 
     /**
-     * Returns your likes for other users
+     * Returns @array with your likes for other users
      */
     public static function getLikesForUser() {
         $likes = array();
@@ -87,7 +87,7 @@ class Likes extends \yii\db\ActiveRecord
     }
 
     /**
-     * Returns users who've liked you
+     * Returns @array with users who've liked you
      */
     public static function getLikesFromUsers() {
         $likes = array();

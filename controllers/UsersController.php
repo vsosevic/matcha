@@ -12,6 +12,7 @@ use app\models\Userstointerests;
 use app\models\Cities;
 use app\models\Avatars;
 use app\models\Likes;
+use app\models\Notifications;
 use app\models\Visits;
 use yii\web\UploadedFile;
 use yii\db\Expression;
@@ -67,6 +68,11 @@ class UsersController extends \yii\web\Controller
                 $likes[] = $value['like_to'];
             }
         }
+
+        $notification = new Notifications;
+        $notification->users_id = $model->Id;
+        $notification->notification_type = 4;
+        $notification->save();
 
         return $this->render('userpage', ['model' => $model, 'avatars' => $avatars, 'interests' => $interests, 'likes' => $likes]);
     }
@@ -226,9 +232,15 @@ class UsersController extends \yii\web\Controller
         json_decode($user_id);
 
         $like = new Likes;
+
         $like->like_from = Yii::$app->user->identity->Id;
         $like->like_to = $user_id;
         $like->save();
+
+        $notification = new Notifications;
+        $notification->users_id = $user_id;
+        $notification->notification_type = 1;
+        $notification->save();
     }
 
     public function actionUnlike() {
@@ -240,6 +252,11 @@ class UsersController extends \yii\web\Controller
         ->createCommand()
         ->delete('Likes', ['like_from' => Yii::$app->user->identity->Id, 'like_to' => $user_id])
         ->execute();
+
+        $notification = new Notifications;
+        $notification->users_id = $user_id;
+        $notification->notification_type = 2;
+        $notification->save();
     }
 
     public function actionGetOnlineStatus() {

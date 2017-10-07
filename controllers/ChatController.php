@@ -6,6 +6,7 @@ use yii\web\Controller;
 use app\models\Chat;
 use app\models\Avatars;
 use app\models\Users;
+use app\models\Notifications;
 use yii\data\ArrayDataProvider;
 use yii\data\SqlDataProvider;
 use Yii;
@@ -118,6 +119,11 @@ class ChatController extends Controller
         $chat->message_to = $userChattingWith->Id;
         $chat->message = $message;
         $chat->save();
+
+        $notification = new Notifications;
+        $notification->users_id = $userChattingWith->Id;
+        $notification->notification_type = 5;
+        $notification->save();
 
         print(json_encode($message));
     }
