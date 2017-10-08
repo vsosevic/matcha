@@ -93,9 +93,11 @@ class SiteController extends Controller
                 ]
             ],
         ]);
-        
+
+        $isAbleToLike = Avatars::isAbleToLike(Yii::$app->user->identity->Id);
+
         $this->view->title = 'Your best matches';
-        return $this->render('index', ['dataProvider' => $dataProvider, 'likes' => $likes]);
+        return $this->render('index', ['dataProvider' => $dataProvider, 'likes' => $likes, 'isAbleToLike' => $isAbleToLike]);
     }
 
     /**
@@ -124,8 +126,10 @@ class SiteController extends Controller
             ],
         ]);
 
+        $isAbleToLike = Avatars::isAbleToLike(Yii::$app->user->identity->Id);
+
         $this->view->title = "See who's come to your profile";
-        return $this->render('index', ['dataProvider' => $dataProvider, 'likes' => $likes]);
+        return $this->render('index', ['dataProvider' => $dataProvider, 'likes' => $likes, 'isAbleToLike' => $isAbleToLike]);
     }
 
     /**
@@ -154,8 +158,10 @@ class SiteController extends Controller
             ],
         ]);
 
+        $isAbleToLike = Avatars::isAbleToLike(Yii::$app->user->identity->Id);
+
         $this->view->title = "See whom you've visited";
-        return $this->render('index', ['dataProvider' => $dataProvider, 'likes' => $likes]);
+        return $this->render('index', ['dataProvider' => $dataProvider, 'likes' => $likes, 'isAbleToLike' => $isAbleToLike]);
     }
 
     /**
@@ -184,8 +190,10 @@ class SiteController extends Controller
             ],
         ]);
 
+        $isAbleToLike = Avatars::isAbleToLike(Yii::$app->user->identity->Id);
+
         $this->view->title = "See whom you've visited";
-        return $this->render('index', ['dataProvider' => $dataProvider, 'likes' => $likes]);
+        return $this->render('index', ['dataProvider' => $dataProvider, 'likes' => $likes, 'isAbleToLike' => $isAbleToLike]);
     }
 
     /**
