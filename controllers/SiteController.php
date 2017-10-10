@@ -67,6 +67,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        if (!Yii::$app->user->isGuest && !Users::userHasFilledAcount()) {
+            Yii::$app->session->setFlash('unfilled_acount', "You have to fill in your account!");
+            return $this->redirect(['users/editsettings']);
+        }
         $myself = "''";
 
         $likes = array();
