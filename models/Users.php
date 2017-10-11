@@ -104,6 +104,12 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     }
 
     public static function userHasFilledAcount() {
+        $user = self::findOne(Yii::$app->user->identity->Id);
+        if ($user->first_name && $user->last_connection && $user->email
+            && $user->gender !== 0 && $user->orientation !== 0
+            && $user->city_id) {
+            return true;
+        }
         return false;
     }
 

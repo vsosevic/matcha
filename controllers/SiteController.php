@@ -114,6 +114,10 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
+        if (!Yii::$app->user->isGuest && !Users::userHasFilledAcount()) {
+            Yii::$app->session->setFlash('unfilled_acount', "You have to fill in your account!");
+            return $this->redirect(['users/editsettings']);
+        }
 
         $likes = Likes::getLikesForUser();
 
@@ -146,6 +150,10 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
+        if (!Yii::$app->user->isGuest && !Users::userHasFilledAcount()) {
+            Yii::$app->session->setFlash('unfilled_acount', "You have to fill in your account!");
+            return $this->redirect(['users/editsettings']);
+        }
 
         $likes = Likes::getLikesForUser();
 
@@ -177,6 +185,10 @@ class SiteController extends Controller
     {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
+        }
+        if (!Yii::$app->user->isGuest && !Users::userHasFilledAcount()) {
+            Yii::$app->session->setFlash('unfilled_acount', "You have to fill in your account!");
+            return $this->redirect(['users/editsettings']);
         }
 
         $likes = Likes::getLikesForUser();
