@@ -6,10 +6,6 @@ var coreUrl = protocol + '//' + host + '/' + website; //http://localhost/matcha/
 
 $( document ).ready(function() {
 
-  // $('#like').on('click', function(){
-  //   console.log('like');
-  // });
-
   $(document).on('click', '.like', function(e){
     var likeId = this.id;
     var url = coreUrl + "/users/like";
@@ -43,19 +39,3 @@ $( document ).ready(function() {
   });
 
 });
-
-function revert(id) {
-
-  if ($(this).css('display') === 'none') {
-    x.style.display = 'inline';
-  } else {
-    x.style.display = 'none';
-  }
-
-  // var x = document.getElementById(id);
-  // if (x.style.display === 'none') {
-  //   x.style.display = 'inline';
-  // } else {
-  //   x.style.display = 'none';
-  // }
-}

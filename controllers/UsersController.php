@@ -12,6 +12,7 @@ use app\models\Userstointerests;
 use app\models\Cities;
 use app\models\Avatars;
 use app\models\Likes;
+use app\models\Blocks;
 use app\models\Notifications;
 use app\models\Visits;
 use yii\web\UploadedFile;
@@ -44,16 +45,27 @@ class UsersController extends \yii\web\Controller
 
     public function actionUser($user_name)
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $model = Users::findByUsername($user_name);
         $avatars = Avatars::getAvatarsByUserId($model->Id);
         $interests = Userstointerests::getInterestsToStringByUserId($model->Id);
 
+        // For visit history
         $visit = new Visits;
         $visit->visit_from = Yii::$app->user->identity->Id;
         $visit->visit_to = $model->Id;
         $visit->save();
 
-        $myself = "''";
+        // Save this visit to notification table
+        $notification = new Notifications;
+        $notification->users_id = $model->Id;
+        $notification->notification_type = 4; // 4 stands for notification type - Visits
+        $notification->save();
+
+        $myself = "''"; // to avoid select error if myself would be NULL
         $likes = array();
 
         if (isset(Yii::$app->user->identity->Id)) {
@@ -69,12 +81,13 @@ class UsersController extends \yii\web\Controller
             }
         }
 
-        $notification = new Notifications;
-        $notification->users_id = $model->Id;
-        $notification->notification_type = 4;
-        $notification->save();
+        $blocked = Blocks::find('block_to')
+            ->where(['block_from' => Yii::$app->user->identity->Id, 'block_to' => $model->Id])
+            ->asArray()
+            ->count();
 
-        return $this->render('userpage', ['model' => $model, 'avatars' => $avatars, 'interests' => $interests, 'likes' => $likes]);
+        return $this->render('userpage', ['model' => $model, 'avatars' => $avatars, 'interests' => $interests,
+            'likes' => $likes, 'blocked' => $blocked]);
     }
 
      /**
@@ -260,6 +273,38 @@ class UsersController extends \yii\web\Controller
         $notification->users_id = $user_id;
         $notification->notification_type = 2;
         $notification->save();
+    }
+
+    public function actionBlock() {
+        $user_id = $_POST['blockUserId'];
+        json_decode($user_id);
+
+        $block = new Blocks;
+
+        $block->block_from = Yii::$app->user->identity->Id;
+        $block->block_to = $user_id;
+        $block->save();
+    }
+
+    public function actionUnblock() {
+        $user_id = $_POST['blockUserId'];
+        json_decode($user_id);
+
+        Yii::$app
+            ->db
+            ->createCommand()
+            ->delete('Blocks', ['block_from' => Yii::$app->user->identity->Id, 'block_to' => $user_id])
+            ->execute();
+    }
+
+    public function actionFake() {
+        $user_id = $_POST['fakeUserId'];
+        json_decode($user_id);
+
+        $user = Users::findIdentity($user_id);
+
+        $user->fake_reported = 1;
+        $user->save();
     }
 
     public function actionGetOnlineStatus() {
