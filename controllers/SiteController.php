@@ -106,7 +106,7 @@ class SiteController extends Controller
     public function actionVisits()
     {
         if (Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect(['users/login']);
         }
 
         $likes = Likes::getLikesForUser();
@@ -136,7 +136,7 @@ class SiteController extends Controller
     public function actionVisited()
     {
         if (Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect(['users/login']);
         }
 
         $likes = Likes::getLikesForUser();
@@ -166,7 +166,7 @@ class SiteController extends Controller
     public function actionLiked()
     {
         if (Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect(['users/login']);
         }
 
         $likes = Likes::getLikesForUser();
