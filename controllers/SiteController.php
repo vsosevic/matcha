@@ -228,11 +228,13 @@ class SiteController extends Controller
         }
 
         $notifications = Notifications::find()
+            ->select(['notification_type'])
             ->where(['users_id' => Yii::$app->user->identity->Id])
+            ->asArray()
             ->all();
 
 
-        return '123';
+        print_r($notifications);
     }
 
     /**

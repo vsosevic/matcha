@@ -81,7 +81,7 @@ class UsersController extends \yii\web\Controller
             }
         }
 
-        $blocked = Blocks::find('block_to')
+        $blocked = Blocks::find()
             ->where(['block_from' => Yii::$app->user->identity->Id, 'block_to' => $model->Id])
             ->asArray()
             ->count();
