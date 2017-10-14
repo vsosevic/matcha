@@ -88,7 +88,7 @@ class ChatController extends Controller
             $i++;
         }
         if(!empty($chat)) {
-            // recerse chat so that we have correct order from bottom to top in the chat
+            // reverse chat so that we have correct order from bottom to top in the chat
             print(json_encode(array_reverse($chat)));
         }
     }
@@ -143,5 +143,3 @@ class ChatController extends Controller
     }
 
 }
-
-?>

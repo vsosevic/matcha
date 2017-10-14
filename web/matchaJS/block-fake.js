@@ -15,7 +15,7 @@ $( document ).ready(function() {
        data: { blockUserId: this.id },
        success: function(responseData)
        {
-           $("#" + blockId + ".block").toggle();
+           $("#" + blockId + ".block-toggle").toggle();
        }
     });
   });
@@ -29,7 +29,7 @@ $( document ).ready(function() {
        data: { blockUserId: this.id },
        success: function(responseData)
        {
-           $("#" + blockId + ".block").toggle();
+           $("#" + blockId + ".block-toggle").toggle();
        }
     });
   });

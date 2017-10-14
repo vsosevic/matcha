@@ -101,8 +101,6 @@ class SiteController extends Controller
             ],
         ]);
 
-
-
         $this->view->title = 'Your best matches';
         return $this->render('index', ['dataProvider' => $dataProvider, 'likes' => $likes, 'isAbleToLike' => $isAbleToLike]);
     }
@@ -221,6 +219,19 @@ class SiteController extends Controller
      * @return string
      */
     public function actionNotifications() {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['users/login']);
+        }
+        if (!Yii::$app->user->isGuest && !Users::userHasFilledAcount()) {
+            Yii::$app->session->setFlash('unfilled_acount', "You have to fill in your account!");
+            return $this->redirect(['users/editsettings']);
+        }
+
+        $notifications = Notifications::find()
+            ->where(['users_id' => Yii::$app->user->identity->Id])
+            ->all();
+
+
         return '123';
     }
 

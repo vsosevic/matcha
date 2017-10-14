@@ -44,8 +44,8 @@ AppAsset::register($this);
             ['label' => 'You\'ve visited', 'url' => ['/site/visited']],
             ['label' => 'You\'re liked by', 'url' => ['/site/liked']],
             ['label' => 'Notifications', 'url' => ['/site/notifications'], 'options' => ['class' => 'notifications']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            //['label' => 'About', 'url' => ['/site/about']],
+            //['label' => 'Contact', 'url' => ['/site/contact']],
             ['label' => 'SignUp', 'url' => ['/users/signup'], 'visible' => Yii::$app->user->isGuest],
             ['label' => 'Settings', 'url' => ['/users/settings'], 'visible' => !Yii::$app->user->isGuest],
             Yii::$app->user->isGuest ? (

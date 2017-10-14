@@ -71,7 +71,7 @@ class UsersController extends \yii\web\Controller
         if (isset(Yii::$app->user->identity->Id)) {
             $myself = Yii::$app->user->identity->Id;
 
-            $queryLikes = Likes::find(['like_to'])
+            $queryLikes = Likes::find()
                 ->where(['like_from' => Yii::$app->user->identity->Id])
                 ->asArray()
                 ->all();
