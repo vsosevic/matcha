@@ -39,3 +39,5 @@ web/uploads
 #congfig db
 config/database.php
 config/db.php
+config/database.php
+config/db.php

@@ -11,6 +11,14 @@ $this->params['breadcrumbs'][] = $this->title;
 /* @var $model app\models\EditSettingsForm */
 /* @var $form ActiveForm */
 ?>
+
+<?php if (Yii::$app->session->hasFlash('unfilled_acount')): ?>
+    <div class="alert alert-danger alert-dismissable">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        <?= Yii::$app->session->getFlash('unfilled_acount') ?>
+    </div>
+<?php endif; ?>
+
 <div class="row">
     <div class="col-lg-5">
 

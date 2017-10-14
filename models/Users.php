@@ -64,7 +64,7 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['user_name', 'first_name', 'last_name', 'password'], 'required'],
+            //[['user_name', 'first_name', 'last_name', 'password', 'gender', 'orientation', 'age', 'email'], 'required'],
             [['gender', 'orientation', 'city_id', 'fame_rating', 'age', 'fake_reported'], 'integer'],
             [['age'], 'integer', 'min' => 18, 'max' => 150],
             [['about'], 'string'],
@@ -101,6 +101,16 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'fake_reported' => 'Fake Reported',
             'auth_key' => 'Auth Key',
         ];
+    }
+
+    public static function userHasFilledAcount() {
+        $user = self::findOne(Yii::$app->user->identity->Id);
+        if ($user->first_name && $user->last_connection && $user->email
+            && $user->gender !== 0 && $user->orientation !== 0
+            && $user->city_id) {
+            return true;
+        }
+        return false;
     }
 
     public function hashPassword($password) {

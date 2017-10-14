@@ -55,7 +55,17 @@ class Avatars extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function getAvatarsByUserId ($users_id) {
+    public static function getAvatarsByUserId($users_id) {
         return self::findOne(['users_id' => $users_id]);
+    }
+
+    public static function isAbleToLike($users_id) {
+        $avatars = self::getAvatarsByUserId($users_id);
+
+        if ($avatars->avatar1 == 'sources/no_image.png') {
+            return false;
+        }
+
+        return true;
     }
 }

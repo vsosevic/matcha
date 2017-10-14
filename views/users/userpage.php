@@ -8,6 +8,7 @@ $this->title = $model->user_name . "'s profile";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <script type="text/javascript" src="<?php echo Yii::$app->request->baseUrl ?>/matchaJS/like.js"></script>
+<script type="text/javascript" src="<?php echo Yii::$app->request->baseUrl ?>/matchaJS/block-fake.js"></script>
 
 <h1><?= Html::encode($this->title) ?></h1>
 
@@ -68,6 +69,21 @@ $this->params['breadcrumbs'][] = $this->title;
 	<a href="#" class="unlike" id="<?php echo $model->Id ?>" class="text-center" <?php if(!in_array($model->id, $likes)) { echo "style='display: none;'"; } ?> >
 	    <img src="<?php echo Yii::$app->request->baseUrl .'/sources/liked.png' ?>" class="img img-responsive">
 	</a>
+</div>
+
+<div class="col-sm-2 user-id-block" >
+    <a href="#" class="block" id="<?php echo $model->Id ?>" class="text-center" <?php if($blocked) { echo "style='display: none;'"; } ?> >
+        <img src="<?php echo Yii::$app->request->baseUrl . '/sources/block.png' ?>" class="img img-responsive">
+    </a>
+    <a href="#" class="unblock" id="<?php echo $model->Id ?>" class="text-center" <?php if(!$blocked) { echo "style='display: none;'"; } ?> >
+        <img src="<?php echo Yii::$app->request->baseUrl .'/sources/unblock.png' ?>" class="img img-responsive">
+    </a>
+</div>
+
+<div class="col-sm-2 user-id-fake" >
+    <a href="#" class="fake" id="<?php echo $model->Id ?>" class="text-center" >
+        <img src="<?php echo Yii::$app->request->baseUrl . '/sources/fake.png' ?>" class="img img-responsive">
+    </a>
 </div>
 
 <script type="text/javascript" src="<?php echo Yii::$app->request->baseUrl ?>/matchaJS/online-status.js"></script>

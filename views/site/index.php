@@ -11,7 +11,7 @@ use yii\widgets\ListView;
     'dataProvider' => $dataProvider,
 
     'itemView' => '_userlist',
-    'viewParams' => ['likes' => $likes],
+    'viewParams' => ['likes' => $likes, 'isAbleToLike' => $isAbleToLike],
     'itemOptions' => [
         'tag' => 'div',
         'class' => 'user-card',
