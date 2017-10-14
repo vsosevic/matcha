@@ -11,6 +11,8 @@ use app\models\ContactForm;
 use app\models\Users;
 use app\models\Likes;
 use app\models\Avatars;
+use app\models\Notifications;
+use app\models\Chat;
 use app\models\Userstointerests;
 use app\models\Cities;
 use app\models\Visits;
@@ -72,12 +74,13 @@ class SiteController extends Controller
             return $this->redirect(['users/editsettings']);
         }
         $myself = "''";
-
+        $isAbleToLike = 0;
         $likes = array();
 
         if (isset(Yii::$app->user->identity->Id)) {
             $myself = Yii::$app->user->identity->Id;
             $likes = Likes::getLikesForUser();
+            $isAbleToLike = Avatars::isAbleToLike(Yii::$app->user->identity->Id);
         }
 
         $query = Users::find()
@@ -98,7 +101,7 @@ class SiteController extends Controller
             ],
         ]);
 
-        $isAbleToLike = Avatars::isAbleToLike(Yii::$app->user->identity->Id);
+
 
         $this->view->title = 'Your best matches';
         return $this->render('index', ['dataProvider' => $dataProvider, 'likes' => $likes, 'isAbleToLike' => $isAbleToLike]);
@@ -210,6 +213,60 @@ class SiteController extends Controller
 
         $this->view->title = "See whom you've visited";
         return $this->render('index', ['dataProvider' => $dataProvider, 'likes' => $likes, 'isAbleToLike' => $isAbleToLike]);
+    }
+
+    /**
+     * Page with notifications of the current user.
+     *
+     * @return string
+     */
+    public function actionNotifications() {
+        return '123';
+    }
+
+    /**
+     * AJAX callback from client.
+     *
+     * @return number of notifications
+     */
+    public function actionGetNotifications() {
+        header('Content-Type: text/event-stream');
+        header('Cache-Control: no-cache');
+
+        if (Yii::$app->user->isGuest) {
+            echo "data: \n\n";
+            flush();
+            return 0;
+        }
+        $notifications = Notifications::find()
+            ->where(['users_id' => Yii::$app->user->identity->Id, 'seen' => 0])
+            ->count();
+
+        echo "data: $notifications\n\n";
+        flush();
+    }
+
+    /**
+     * AJAX callback from client.
+     *
+     * @return number of chatnotifications
+     */
+    public function actionGetChatNotifications() {
+        header('Content-Type: text/event-stream');
+        header('Cache-Control: no-cache');
+
+        if (Yii::$app->user->isGuest) {
+            echo "data: \n\n";
+            flush();
+            return 0;
+        }
+
+        $chat_notifications = Chat::find()
+            ->where(['message_to' => Yii::$app->user->identity->Id, 'seen' => 0])
+            ->count();
+
+        echo "data: $chat_notifications\n\n";
+        flush();
     }
 
     /**

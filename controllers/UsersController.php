@@ -240,6 +240,9 @@ class UsersController extends \yii\web\Controller
             ]);
     }
 
+    /**
+     * AJAX callback from client.
+     */
     public function actionLike() {
         $user_id = $_POST['likeUserId'];
         json_decode($user_id);
@@ -259,6 +262,9 @@ class UsersController extends \yii\web\Controller
         $notification->save();
     }
 
+    /**
+     * AJAX callback from client.
+     */
     public function actionUnlike() {
         $user_id = $_POST['likeUserId'];
         json_decode($user_id);
@@ -275,6 +281,9 @@ class UsersController extends \yii\web\Controller
         $notification->save();
     }
 
+    /**
+     * AJAX callback from client.
+     */
     public function actionBlock() {
         $user_id = $_POST['blockUserId'];
         json_decode($user_id);
@@ -307,6 +316,9 @@ class UsersController extends \yii\web\Controller
         $user->save();
     }
 
+    /**
+     * AJAX callback from client.
+     */
     public function actionGetOnlineStatus() {
         header('Content-Type: text/event-stream');
         header('Cache-Control: no-cache');
@@ -327,9 +339,18 @@ class UsersController extends \yii\web\Controller
         flush();
     }
 
+    /**
+     * AJAX callback from client.
+     */
     public function actionSetOnlineStatus() {
         header('Content-Type: text/event-stream');
         header('Cache-Control: no-cache');
+
+        if (Yii::$app->user->isGuest) {
+            echo "data: \n\n";
+            flush();
+            return 0;
+        }
 
         $user = Users::findIdentity(Yii::$app->user->identity->Id);
         $user->last_connection = date('Y-m-d H:i:s');

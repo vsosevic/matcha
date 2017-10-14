@@ -33,8 +33,8 @@ use Yii;
  * @property Notifications[] $notifications
  * @property Cities $city
  * @property Userstointerests[] $userstointerests
- * @property Visites[] $visites
- * @property Visites[] $visites0
+ * @property Visits[] $visits
+ * @property Visits[] $visits0
  */
 class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {

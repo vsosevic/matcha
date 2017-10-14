@@ -39,10 +39,11 @@ AppAsset::register($this);
         'encodeLabels' => false,
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Chat', 'url' => ['/chat/index']],
-            ['label' => 'Visits' . Html::tag('span', '9', ['class' => 'badge']), 'url' => ['/site/visits']],
+            ['label' => 'Chat', 'url' => ['/chat/index'], 'options' => ['class' => 'chat']],
+            ['label' => 'Visits', 'url' => ['/site/visits']],
             ['label' => 'You\'ve visited', 'url' => ['/site/visited']],
             ['label' => 'You\'re liked by', 'url' => ['/site/liked']],
+            ['label' => 'Notifications', 'url' => ['/site/notifications'], 'options' => ['class' => 'notifications']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             ['label' => 'SignUp', 'url' => ['/users/signup'], 'visible' => Yii::$app->user->isGuest],
@@ -89,6 +90,8 @@ AppAsset::register($this);
 
     var statusOnline = new EventSource(coreUrl + "/users/set-online-status");
 </script>
+<script type="text/javascript" src="<?php echo Yii::$app->request->baseUrl ?>/matchaJS/site.js"></script>
+
 
 <?php $this->endBody() ?>
 </body>

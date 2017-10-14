@@ -23,7 +23,7 @@ use yii\grid\GridView;
     <?php else: ?>
         <div class="col-sm-2 user-id-like" >
             <img src="<?php echo Yii::$app->request->baseUrl . '/sources/like.png' ?>" class="img img-responsive">
-            <span>To be able to like, you must have a main avatar</span>
+            <span>To be able to like, you must have a main avatar or be logged in</span>
         </div>
     <?php endif; ?>
 
