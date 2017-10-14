@@ -1,7 +1,6 @@
 
 <?php
 use yii\helpers\Html;
-use app\models\Users;
 use app\models\Cities;
 
 $this->title = $model->user_name . "'s profile";

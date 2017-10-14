@@ -227,14 +227,29 @@ class SiteController extends Controller
             return $this->redirect(['users/editsettings']);
         }
 
+        $notification_list = [
+            '1' => "You've received a like",
+            '2' => 'User unliked you',
+            '3' => "You\'ve received a like back",
+            '4' => "Someone visited your profile",
+            '5' => "You have new message",
+        ];
+
         $notifications = Notifications::find()
             ->select(['notification_type'])
-            ->where(['users_id' => Yii::$app->user->identity->Id])
-            ->asArray()
+            ->where(['users_id' => Yii::$app->user->identity->Id, 'seen' => 0])
             ->all();
 
+        $set_not_as_seen = Notifications::find()
+            ->where(['users_id' => Yii::$app->user->identity->Id, 'seen' => 0])
+            ->all();
 
-        print_r($notifications);
+        foreach ($set_not_as_seen as $notification) {
+            $notification->seen = 1;
+            $notification->save();
+        }
+
+        return $this->render('notifications', ['notifications' => $notifications, 'notification_list' => $notification_list]);
     }
 
     /**

@@ -32,10 +32,6 @@ class UsersController extends \yii\web\Controller
         }
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            // $user = Users::findByUsername(Yii::$app->user->identity->user_name);
-            // $user->last_connection = new Expression('NOW()');
-            // $user->save();
-
             return $this->goBack();
         }
         return $this->render('login', [
@@ -100,9 +96,6 @@ class UsersController extends \yii\web\Controller
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        // $geoplugin = new geoPlugin;
-
-        // print_r(yii::$app->geolocation->getInfo('173.194.118.22')); die();
         $model = Users::findByUsername(Yii::$app->user->identity->user_name);
         $avatars = Avatars::getAvatarsByUserId(Yii::$app->user->identity->Id);
         $interests = Userstointerests::getInterestsToStringByUserId(Yii::$app->user->identity->Id);
@@ -111,7 +104,6 @@ class UsersController extends \yii\web\Controller
 
     public function actionSaveCity()
     {
-        // var_dump($_GET); die();
         $model = Users::findByUsername(Yii::$app->user->identity->user_name);
         if (isset($model->city_id))
         {
@@ -126,7 +118,6 @@ class UsersController extends \yii\web\Controller
         }
         $model->city_id = $cityInDB->Id;
         $model->save();
-        // echo $userCity;
     }
 
     public function actionEditsettings()
@@ -140,9 +131,7 @@ class UsersController extends \yii\web\Controller
         {
             $userCity = "Worldwide";
         }
-        // var_dump($userCity); die();
-        // $avatars = Avatars::getAvatarsByUserId(Yii::$app->user->identity->Id);
-        if ($model->load(Yii::$app->request->post())) 
+        if ($model->load(Yii::$app->request->post()))
         {
             // clear UsersToInterests table;
             $usersToInterests = Userstointerests::find()->where(['users_id' => Yii::$app->user->identity->Id])->all();
@@ -175,12 +164,10 @@ class UsersController extends \yii\web\Controller
                     $city->save();
                 }
                 $model->link('city', $city);
-                // $model->city_id = $city->Id;
             }
             $model->save();
             return $this->redirect(['users/settings']);
         }
-        // $usersToInterests = new Userstointerests;
         $interests = Userstointerests::getInterestsToStringByUserId(Yii::$app->user->identity->Id);
         return $this->render('editsettings', ['model' => $model, 'interests' => $interests, 'userCity' => $userCity]);
     }
@@ -193,15 +180,12 @@ class UsersController extends \yii\web\Controller
         }
         $avatars = Avatars::getAvatarsByUserId(Yii::$app->user->identity->Id);
         $avatars->scenario = 'upload-avatar';
-        // var_dump($avatars->avatar1); die();
-        if (Yii::$app->request->post()) 
+        if (Yii::$app->request->post())
         {
             //save input images
             $avatarId = $_GET['avatarId'];
             $new_image = UploadedFile::getInstance($avatars, $avatarId);
-            // var_dump($avatars->$avatarId);die();
             $delete_image = $avatars->$avatarId;
-            // echo $avatars->avatar1; die();
             $new_image_name = uniqid() . '.' . $new_image->extension;
             $avatars->$avatarId = 'uploads/' . $new_image_name;
             if($avatars->save()) 
