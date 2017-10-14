@@ -15,9 +15,7 @@ $( document ).ready(function() {
        data: { likeUserId: this.id },
        success: function(responseData)
        {
-            // var jsonResponse =  JSON.parse(responseData);
-            console.log(".like, #" + likeId);
-            $("[id=" + likeId + "]").toggle();
+            $("#" + likeId + ".like").toggle();
        }
     });
   });
@@ -31,9 +29,7 @@ $( document ).ready(function() {
        data: { likeUserId: this.id },
        success: function(responseData)
        {
-            // var jsonResponse =  JSON.parse(responseData);
-            console.log(".unlike, #" + likeId);
-            $("[id=" + likeId + "]").toggle();
+            $("#" + likeId + ".like").toggle();
        }
     });
   });

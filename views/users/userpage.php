@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<a href="#" class="like" id="<?php echo $model->Id ?>" class="text-center" <?php if(in_array($model->id, $likes)) { echo "style='display: none;'"; } ?> >
 	    <img src="<?php echo Yii::$app->request->baseUrl . '/sources/like.png' ?>" class="img img-responsive">
 	</a>
-	<a href="#" class="unlike" id="<?php echo $model->Id ?>" class="text-center" <?php if(!in_array($model->id, $likes)) { echo "style='display: none;'"; } ?> >
+	<a href="#" class="like" id="<?php echo $model->Id ?>" class="text-center" <?php if(!in_array($model->id, $likes)) { echo "style='display: none;'"; } ?> >
 	    <img src="<?php echo Yii::$app->request->baseUrl .'/sources/liked.png' ?>" class="img img-responsive">
 	</a>
 </div>
@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <a href="#" class="block" id="<?php echo $model->Id ?>" class="text-center" <?php if($blocked) { echo "style='display: none;'"; } ?> >
         <img src="<?php echo Yii::$app->request->baseUrl . '/sources/block.png' ?>" class="img img-responsive">
     </a>
-    <a href="#" class="unblock" id="<?php echo $model->Id ?>" class="text-center" <?php if(!$blocked) { echo "style='display: none;'"; } ?> >
+    <a href="#" class="block" id="<?php echo $model->Id ?>" class="text-center" <?php if(!$blocked) { echo "style='display: none;'"; } ?> >
         <img src="<?php echo Yii::$app->request->baseUrl .'/sources/unblock.png' ?>" class="img img-responsive">
     </a>
 </div>
